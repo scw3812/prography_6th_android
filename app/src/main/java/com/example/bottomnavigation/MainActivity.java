@@ -5,14 +5,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
 
         TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, tabLayout.getTabCount());
@@ -48,5 +50,19 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        setupTabIcons(0, R.drawable.baseline_call_white_18dp, "CALLS");
+        setupTabIcons(1, R.drawable.baseline_chat_white_18dp, "CHATS");
+        setupTabIcons(2, R.drawable.baseline_perm_contact_calendar_white_18dp, "CONTACTS");
+    }
+
+    private void setupTabIcons(int tabCount, int imgId, String text){
+        View view = getLayoutInflater().inflate(R.layout.tab_icon, null, false);
+        ImageView imageView = view.findViewById(R.id.icon_img);
+        TextView textView = view.findViewById(R.id.icon_text);
+        imageView.setImageResource(imgId);
+        textView.setText(text);
+
+        tabLayout.getTabAt(tabCount).setCustomView(view);
     }
 }
